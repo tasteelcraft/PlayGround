@@ -1,57 +1,948 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101611"><title>AFTERLIGHT — Project Dynamic Genesis</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-:root{--bg:#101611;--panel:#171f19;--panel2:#1d2820;--line:#2b382e;--text:#eef2e9;--muted:#91a092;--lime:#c8f169;--orange:#ff9d67;--blue:#8bc9e8;--red:#f0786e;--mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--display:'Space Grotesk',sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;background-image:radial-gradient(ellipse at 65% -15%,#344b2e44,transparent 55%)}button{font:inherit;color:inherit;cursor:pointer} .app{max-width:1440px;margin:auto;padding:0 28px 30px}.topbar{height:74px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px}.brandmark{width:35px;height:35px;border-radius:11px;background:var(--lime);color:#152013;display:grid;place-items:center;font-size:21px;font-weight:bold}.brand strong{font:700 15px var(--display);letter-spacing:.13em}.brand small{display:block;color:var(--muted);font:10px var(--mono);letter-spacing:.14em;margin-top:3px}.topright{display:flex;align-items:center;gap:12px}.daypill,.savepill{border:1px solid var(--line);border-radius:8px;padding:8px 11px;color:var(--muted);font:11px var(--mono)}.daypill span{color:var(--lime)}.iconbtn{background:transparent;border:1px solid var(--line);width:35px;height:35px;border-radius:8px;color:var(--muted)}
-.hero{display:flex;justify-content:space-between;align-items:flex-end;padding:31px 0 23px}.eyebrow{font:10px var(--mono);letter-spacing:.18em;color:var(--lime);text-transform:uppercase}.hero h1{font:600 clamp(26px,4vw,39px) var(--display);margin:7px 0 6px;letter-spacing:-.04em}.hero p{margin:0;color:var(--muted);font-size:13px}.phase{display:flex;align-items:center;gap:9px;color:var(--lime);font:10px var(--mono);letter-spacing:.1em;border:1px solid #485b35;border-radius:20px;padding:9px 13px;background:#c8f1690d}.dot{width:7px;height:7px;background:var(--lime);border-radius:50%;box-shadow:0 0 10px var(--lime)}
-.resources{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:22px}.resource{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 15px;display:flex;justify-content:space-between;align-items:center;min-height:65px}.res-label{color:var(--muted);font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase}.res-value{font:600 19px var(--display);margin-top:3px}.res-icon{font-size:18px;opacity:.85}.layout{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:18px;align-items:start}.mainpanel,.sidepanel{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}.tabs{display:flex;gap:4px;padding:10px;border-bottom:1px solid var(--line);background:#121914}.tab{border:0;background:none;color:var(--muted);font:11px var(--mono);padding:11px 15px;border-radius:7px;letter-spacing:.04em}.tab.active{background:var(--panel2);color:var(--lime)}.tab .tabicon{margin-right:7px}.view{padding:21px;min-height:510px}.viewhead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:19px}.viewhead h2{font:600 21px var(--display);margin:0 0 5px}.viewhead p{font-size:12px;color:var(--muted);margin:0}.tag{font:9px var(--mono);padding:6px 8px;color:var(--lime);border:1px solid #40532e;border-radius:5px;text-transform:uppercase;letter-spacing:.08em}.shelter-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.section-title{font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 11px}.room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.room{position:relative;min-height:94px;border:1px solid var(--line);background:#131a15;border-radius:9px;padding:11px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}.room:after{content:'';position:absolute;inset:auto 0 0;height:3px;background:var(--roomcolor,var(--lime));opacity:.68}.room .roomicon{font-size:18px}.room b{font-size:11px}.room small{font:9px var(--mono);color:var(--muted)}.emptyroom{border:1px dashed #3b493d;background:#141a15;color:#6d7a6e;justify-content:center;align-items:center;gap:8px;cursor:pointer;transition:.2s}.emptyroom:hover{border-color:var(--lime);color:var(--lime)}.emptyroom b{font-weight:400}.people{display:flex;flex-direction:column;gap:8px}.person{background:#131a15;border:1px solid var(--line);padding:11px;border-radius:9px}.person-top{display:flex;align-items:center;gap:9px}.avatar{height:32px;width:32px;border-radius:10px;display:grid;place-items:center;background:#314433;color:#d9f5b0;font-size:15px}.person-name{font-weight:600;font-size:12px}.person-role{display:block;color:var(--muted);font:9px var(--mono);margin-top:3px}.mood{margin-left:auto;color:var(--lime);font-size:16px}.need{margin-top:10px;display:grid;grid-template-columns:44px 1fr 27px;align-items:center;gap:6px;color:var(--muted);font:9px var(--mono)}.bar{height:5px;border-radius:5px;background:#29342b;overflow:hidden}.bar i{display:block;height:100%;border-radius:5px;background:var(--lime);transition:width .3s}.neednum{text-align:right}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.btn{border:1px solid var(--line);background:var(--panel2);border-radius:7px;padding:10px 12px;color:var(--text);font-size:11px;transition:.16s}.btn:hover{border-color:var(--lime);transform:translateY(-1px)}.btn.primary{background:var(--lime);border-color:var(--lime);color:#182114;font-weight:700}.btn:disabled{opacity:.42;cursor:not-allowed;transform:none}.sidepanel{padding:18px}.sidepanel h3{margin:0;font:600 15px var(--display)}.side-top{display:flex;justify-content:space-between;align-items:center}.side-divider{height:1px;background:var(--line);margin:15px 0}.objective{background:linear-gradient(120deg,#263923,#1d2820);border:1px solid #405536;padding:13px;border-radius:9px;margin-top:13px}.objective small{font:9px var(--mono);color:var(--lime);letter-spacing:.12em}.objective b{display:block;font:600 13px var(--display);margin:7px 0}.objective p{font-size:10px;color:#aab8a7;line-height:1.5;margin:0}.progressline{height:4px;background:#344236;border-radius:4px;margin-top:11px}.progressline i{display:block;background:var(--lime);height:100%;border-radius:4px;transition:width .3s}.objfoot{font:9px var(--mono);color:var(--muted);margin-top:7px;display:flex;justify-content:space-between}.profile{display:flex;gap:10px;align-items:center;margin:15px 0 8px}.profileicon{height:36px;width:36px;background:#2e3b2b;border-radius:10px;display:grid;place-items:center;font-size:18px}.profile strong{font:600 12px var(--display);display:block}.profile span{font:9px var(--mono);color:var(--muted)}.traits{display:flex;gap:5px;flex-wrap:wrap}.trait{padding:5px 7px;border-radius:5px;background:#222d24;color:#b1c2af;font:9px var(--mono)}.log{display:flex;flex-direction:column;gap:11px}.logitem{display:flex;gap:9px;font-size:10px;color:#aab6a9;line-height:1.45}.logdot{flex:0 0 6px;height:6px;border-radius:50%;background:var(--lime);margin-top:4px}.logtime{display:block;color:#6e7c70;font:9px var(--mono);margin-top:3px}.sidefoot{color:#697669;font:9px var(--mono);line-height:1.5;margin-top:15px}
-/* secondary views */ .cardgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.feature-card{border:1px solid var(--line);background:#131a15;border-radius:10px;padding:15px;min-height:150px;display:flex;flex-direction:column}.feature-card .bigicon{font-size:22px;margin-bottom:10px}.feature-card h3{font:600 14px var(--display);margin:0 0 5px}.feature-card p{color:var(--muted);font-size:11px;line-height:1.5;margin:0 0 13px;flex:1}.feature-card .btn{align-self:flex-start}.statrow{display:flex;justify-content:space-between;color:var(--muted);font:10px var(--mono);padding:9px 0;border-bottom:1px solid var(--line)}.statrow b{color:var(--text);font-weight:500}.map{min-height:245px;border:1px solid var(--line);border-radius:10px;padding:14px;background:radial-gradient(ellipse at 50% 50%,#263d2b,#141b16 68%);display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(4,1fr);gap:7px;margin-bottom:14px}.tile{border:1px solid #435144;border-radius:7px;background:#27382a88;display:grid;place-items:center;font-size:18px;position:relative}.tile.locked{opacity:.35;background:#151b16}.tile.owned{border-color:#9cce59;background:#546e374f;box-shadow:inset 0 0 16px #b5eb4c16}.tile .tilelabel{position:absolute;bottom:3px;font:7px var(--mono);color:#a8b7a4}.mission{border:1px solid var(--line);border-radius:10px;padding:16px;background:#131a15;margin:12px 0}.missiontop{display:flex;justify-content:space-between}.mission h3{margin:0;font:600 15px var(--display)}.mission p{color:var(--muted);font-size:11px;line-height:1.5}.missionstats{display:flex;gap:14px;color:#9eae9d;font:9px var(--mono);margin:13px 0}.missionstats span b{color:var(--orange);font-weight:400}.mission-actions{display:flex;gap:8px}.alert{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;background:#e8f4dc;color:#172115;border-radius:8px;padding:11px 16px;font:11px var(--mono);z-index:20;transition:.25s;pointer-events:none;box-shadow:0 8px 28px #0008}.alert.show{opacity:1;transform:translate(-50%,0)}.modalwrap{position:fixed;inset:0;background:#080b09c9;display:none;align-items:center;justify-content:center;z-index:10;padding:18px}.modalwrap.open{display:flex}.modal{width:min(440px,100%);background:var(--panel);border:1px solid #40513e;border-radius:13px;padding:21px;box-shadow:0 20px 60px #0008}.modal h2{font:600 20px var(--display);margin:0 0 6px}.modal p{font-size:11px;color:var(--muted);line-height:1.6;margin:0 0 14px}.buildoptions{display:flex;flex-direction:column;gap:8px}.buildopt{display:flex;justify-content:space-between;align-items:center;text-align:left;background:#131a15;border:1px solid var(--line);border-radius:8px;padding:11px}.buildopt:hover{border-color:var(--lime)}.buildopt b{font-size:11px;display:block}.buildopt small{font:9px var(--mono);color:var(--muted)}.buildopt em{font:10px var(--mono);color:var(--lime);font-style:normal}.modalclose{margin-top:12px;width:100%}.footer{display:flex;justify-content:space-between;color:#637064;font:9px var(--mono);padding:14px 2px}.toasticon{color:var(--lime)}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.sidepanel{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.sidepanel>.side-divider:nth-of-type(2){display:none}.sidepanel .log{grid-column:2;grid-row:2/5}.sidefoot{grid-column:1/-1}.resources{grid-template-columns:repeat(5,1fr)}}
-@media(max-width:620px){.app{padding:0 14px 22px}.topbar{height:62px}.brand strong{font-size:13px}.brandmark{height:31px;width:31px}.savepill{display:none}.hero{padding:23px 0 17px}.hero p{max-width:265px;line-height:1.5}.phase{font-size:8px;padding:8px}.resources{gap:6px;margin-bottom:14px}.resource{padding:9px 8px;min-height:61px;display:block}.res-label{font-size:8px;letter-spacing:0}.res-value{font-size:16px}.res-icon{display:none}.layout{gap:12px}.tabs{overflow-x:auto;padding:7px;scrollbar-width:none}.tab{white-space:nowrap;font-size:10px;padding:10px 12px}.view{padding:15px;min-height:0}.viewhead h2{font-size:19px}.shelter-layout{grid-template-columns:1fr}.people{display:grid;grid-template-columns:1fr 1fr}.person{padding:9px}.need{grid-template-columns:40px 1fr 22px;gap:4px}.room{min-height:84px}.sidepanel{display:block;padding:15px}.sidepanel .log{display:none}.sidepanel>.side-divider:nth-of-type(2){display:block}.sidefoot{display:block}.cardgrid{grid-template-columns:1fr 1fr;gap:8px}.feature-card{padding:12px;min-height:165px}.feature-card p{font-size:10px}.map{gap:5px;min-height:210px;padding:9px}.tile{font-size:15px}.footer{font-size:8px}}
-@media(max-width:370px){.people{grid-template-columns:1fr}.cardgrid{grid-template-columns:1fr}.phase{padding:7px}.resources{grid-template-columns:repeat(5,minmax(0,1fr))}.res-label{font-size:7px}}
-</style>
-</head>
-<body><div class="app">
-<header class="topbar"><div class="brand"><div class="brandmark">✳</div><div><strong>AFTERLIGHT</strong><small>PROJECT DYNAMIC GENESIS</small></div></div><div class="topright"><div class="savepill">● &nbsp; AUTOSAVE ON</div><div class="daypill">DAY <span id="dayNum">01</span> &nbsp;·&nbsp; <span id="weather">CLEAR</span></div><button class="iconbtn" id="resetBtn" title="New campaign">↺</button></div></header>
-<section class="hero"><div><div class="eyebrow">A living world, built by you</div><h1>Make a place worth surviving.</h1><p>The old world ended. What comes next is yours to decide.</p></div><div class="phase"><i class="dot"></i><span id="phaseText">PHASE 01 · SURVIVAL</span></div></section>
-<section class="resources" id="resources"></section>
-<div class="layout"><main class="mainpanel"><nav class="tabs"><button class="tab active" data-tab="shelter"><span class="tabicon">⌂</span>SHELTER</button><button class="tab" data-tab="city"><span class="tabicon">▥</span>THE CITY</button><button class="tab" data-tab="orbit"><span class="tabicon">◉</span>ORBIT</button><button class="tab" data-tab="field"><span class="tabicon">⌖</span>FIELD OPS</button></nav><div class="view" id="view"></div></main>
-<aside class="sidepanel"><div><div class="side-top"><h3>Campaign</h3><span class="tag" id="phaseTag">CHAPTER 01</span></div><div class="objective" id="objective"></div><div class="side-divider"></div><div class="section-title">Your emerging style</div><div class="profile" id="profile"></div><div class="traits" id="traits"></div></div><div class="side-divider"></div><div class="logwrap"><div class="section-title">World signals</div><div class="log" id="log"></div></div><div class="sidefoot">YOUR CHOICES SHAPE THE SETTLEMENT.<br>THERE IS NO SINGLE WAY FORWARD.</div></aside></div>
-<footer class="footer"><span>AFTERLIGHT / BUILD 0.9.4</span><span>AN ADAPTIVE SETTLEMENT SIM</span><span id="saveStatus">PROGRESS STORED LOCALLY</span></footer></div>
-<div class="modalwrap" id="modalwrap"><div class="modal" id="modal"></div></div><div class="alert" id="alert"></div>
-<script>
-const initial={day:1,food:32,power:24,scrap:28,credits:12,intel:0,rooms:['habitat','garden'],people:[{name:'Mara Venn',role:'Caretaker',icon:'◉',needs:{Food:78,Energy:81,Social:66,Morale:73},skill:'Care 2'},{name:'Ivo Park',role:'Scavenger',icon:'✦',needs:{Food:71,Energy:63,Social:52,Morale:69},skill:'Field 2'},{name:'Sol Reyes',role:'Tinkerer',icon:'⌁',needs:{Food:82,Energy:74,Social:67,Morale:77},skill:'Craft 2'}],owned:[12],style:{architect:1,tycoon:0,renegade:0,operator:0},heat:0,missions:0,city:0,orbit:0,logs:[['A place to begin','The shelter is holding. For now.'],['A quiet signal','A relay tower blinks from the eastern ridge.']],contracts:0};
-let s;try{s=JSON.parse(localStorage.getItem('afterlight-save'))||structuredClone(initial)}catch{s=structuredClone(initial)}let tab='shelter';let alertTimer;
-const defs={habitat:{name:'Habitat',icon:'⌂',cost:{scrap:0,power:0},desc:'A warm place to sleep.'},garden:{name:'Grow room',icon:'❋',cost:{scrap:14,power:4},desc:'Fresh food, grown below ground.'},workshop:{name:'Workshop',icon:'⚒',cost:{scrap:16,power:5},desc:'Turn salvage into something useful.'},clinic:{name:'Infirmary',icon:'✚',cost:{scrap:18,power:6},desc:'Keep your people on their feet.'},bunk:{name:'Bunk room',icon:'▤',cost:{scrap:12,power:3},desc:'Make room for another survivor.'},relay:{name:'Signal relay',icon:'⌁',cost:{scrap:20,power:8},desc:'Listen for signals beyond the ridge.'}};
-const resDef=[['food','RATIONS','◌'],['power','POWER','ϟ'],['scrap','SALVAGE','⬡'],['credits','CREDITS','¤'],['intel','INTEL','⌁']];
-function save(){localStorage.setItem('afterlight-save',JSON.stringify(s));document.querySelector('#saveStatus').textContent='PROGRESS STORED LOCALLY'}
-function notify(msg){const el=document.querySelector('#alert');el.textContent=msg;el.classList.add('show');clearTimeout(alertTimer);alertTimer=setTimeout(()=>el.classList.remove('show'),2100)}
-function addlog(title,text){s.logs.unshift([title,text]);s.logs=s.logs.slice(0,4)}function spend(cost){for(const [k,v] of Object.entries(cost))if(s[k]<v)return false;for(const [k,v] of Object.entries(cost))s[k]-=v;return true}function afford(cost){return Object.entries(cost).every(([k,v])=>s[k]>=v)}
-function actionStyle(key,n=1){s.style[key]+=n;}
-function roomCount(room){return s.rooms.filter(r=>r===room).length}
-function getPhase(){return s.orbit?'ORBITAL AGE':s.city>=2?'PHASE 03 · EXPANSION':s.day>=4?'PHASE 02 · ENTERPRISE':'PHASE 01 · SURVIVAL'}
-function profileName(){const entries=[['architect','THE ARCHITECT','⌂'],['tycoon','THE GOVERNOR','◈'],['renegade','THE RENEGADE','⚑'],['operator','THE OPERATOR','⌖']].sort((a,b)=>s.style[b[0]]-s.style[a[0]]);let [key,name,icon]=entries[0];if(!s.style[key])return ['THE PIONEER','✳','A little of everything'];return [name,icon,({architect:'Shelter & community',tycoon:'Industry & expansion',renegade:'Risk & opportunity',operator:'Fieldcraft & defense'})[key]]}
-function render(){document.querySelector('#dayNum').textContent=String(s.day).padStart(2,'0');document.querySelector('#weather').textContent=['CLEAR','DUST WIND','CLEAR','COLD FRONT'][s.day%4];document.querySelector('#phaseText').textContent=getPhase();document.querySelector('#phaseTag').textContent=s.orbit?'CHAPTER 03':s.city?'CHAPTER 02':'CHAPTER 01';document.querySelector('#resources').innerHTML=resDef.map(([key,label,icon])=>`<div class="resource"><div><div class="res-label">${label}</div><div class="res-value">${s[key]}</div></div><span class="res-icon">${icon}</span></div>`).join('');renderView();renderSide();save()}
-function renderSide(){const target=s.day<3?2:s.day<6?4:6;const progress=Math.min(100,Math.round((s.day-1)/target*100));document.querySelector('#objective').innerHTML=`<small>PRIMARY DIRECTIVE</small><b>${s.day<3?'Keep the lights on':s.city<1?'Reach the city edge':'Build beyond the horizon'}</b><p>${s.day<3?'Secure food and keep your shelter powered. The first nights are the hardest.':s.city<1?'Establish a workshop and grow your supplies to unlock the urban route.':'Find a place for your people in the world that follows.'}</p><div class="progressline"><i style="width:${progress}%"></i></div><div class="objfoot"><span>${s.day<3?'SURVIVAL CHECK':'SETTLEMENT GROWTH'}</span><span>${progress}%</span></div>`;let [name,icon,sub]=profileName();document.querySelector('#profile').innerHTML=`<div class="profileicon">${icon}</div><div><strong>${name}</strong><span>${sub}</span></div>`;let ranks=Object.entries(s.style).sort((a,b)=>b[1]-a[1]);document.querySelector('#traits').innerHTML=ranks.map(([k,v])=>`<span class="trait">${({architect:'BUILD',tycoon:'TRADE',renegade:'HEAT',operator:'OPS'})[k]} ${v}</span>`).join('');document.querySelector('#log').innerHTML=s.logs.map(([title,text],i)=>`<div class="logitem"><i class="logdot" style="background:${i===0?'var(--lime)':'#677766'}"></i><div>${title}<span class="logtime">${text}</span></div></div>`).join('')}
-function renderView(){const v=document.querySelector('#view');if(tab==='shelter')v.innerHTML=shelterView();if(tab==='city')v.innerHTML=cityView();if(tab==='orbit')v.innerHTML=orbitView();if(tab==='field')v.innerHTML=fieldView();v.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>handle(b.dataset.action,b.dataset.arg));}
-function shelterView(){const rooms=s.rooms.map((id,i)=>{let d=defs[id];return `<div class="room" style="--roomcolor:${id==='garden'?'#9bcf62':id==='workshop'?'#e7a260':id==='clinic'?'#78b9d1':'#c8f169'}"><span class="roomicon">${d.icon}</span><b>${d.name}</b><small>MODULE ${String(i+1).padStart(2,'0')}</small></div>`}).join('');return `<div class="viewhead"><div><h2>Home, for now.</h2><p>Your shelter is small. It doesn't have to stay that way.</p></div><span class="tag">${s.people.length} DWELLERS</span></div><div class="shelter-layout"><section><div class="section-title">Shelter modules · ${s.rooms.length} rooms</div><div class="room-grid">${rooms}<button class="room emptyroom" data-action="build"><span style="font-size:20px">＋</span><b>Add a room</b></button></div><div class="actions"><button class="btn primary" data-action="endday">End day <span>→</span></button><button class="btn" data-action="talk">Check in with everyone</button></div></section><section><div class="section-title">The people who made it</div><div class="people">${s.people.map(personCard).join('')}</div></section></div>`}
-function personCard(p,i){return `<article class="person"><div class="person-top"><div class="avatar">${p.icon}</div><div><span class="person-name">${p.name}</span><span class="person-role">${p.role} · ${p.skill}</span></div><span class="mood">${Math.min(...Object.values(p.needs))>55?'☺':'☹'}</span></div>${Object.entries(p.needs).map(([k,val])=>`<div class="need"><span>${k.toUpperCase()}</span><div class="bar"><i style="width:${val}%;background:${val<35?'var(--red)':val<55?'var(--orange)':'var(--lime)'}"></i></div><span class="neednum">${val}</span></div>`).join('')}</article>`}
-function cityView(){const nodes=[['⌂','Shelter',true],['🌲','Pine flats',true],['⌁','Relay hill',true],['?','Unknown',false],['▥','Old market',false],['?','Unknown',false],['⚓','Flood docks',false],['?','Unknown',false],['◈','Depot',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false],['?','Unknown',false]];return `<div class="viewhead"><div><h2>The city remembers.</h2><p>Every block has a story. Most of them aren't finished.</p></div><span class="tag">${s.city} DISTRICTS</span></div><div class="map">${nodes.map((n,i)=>`<div class="tile ${n[2]?'owned':''} ${!n[2]?'locked':''}">${n[0]}<span class="tilelabel">${n[1]}</span></div>`).join('')}</div><div class="cardgrid"><div class="feature-card"><span class="bigicon">▥</span><h3>Open the old market</h3><p>Clear a route into the market district. Trade salvage for credits and meet the neighborhood.</p><div class="statrow"><span>REQUIRES</span><b>25 salvage · 12 food</b></div><button class="btn primary" data-action="market" style="margin-top:12px" ${s.scrap<25||s.food<12?'disabled':''}>Establish a foothold</button></div><div class="feature-card"><span class="bigicon">♙</span><h3>A neighbor in need</h3><p>Someone at Pine Flats is asking for help. Showing up could change things.</p><div class="statrow"><span>REWARD</span><b>+1 dweller · +8 morale</b></div><button class="btn" data-action="neighbor" style="margin-top:12px" ${s.day<2?'disabled':''}>Answer the signal</button></div></div>`}
-function orbitView(){const unlocked=s.city>=2||s.orbit;return `<div class="viewhead"><div><h2>Beyond the blue.</h2><p>A wider world is waiting. First, build a reason to reach it.</p></div><span class="tag">${unlocked?'ORBIT ACCESS':'LOCKED · CITY 02'}</span></div><div class="map" style="min-height:210px;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr);background:radial-gradient(ellipse at 50%,#294751,#141b16 70%)"><div class="tile owned">◉<span class="tilelabel">HOMEWORLD</span></div><div class="tile">☾<span class="tilelabel">LUNA</span></div><div class="tile locked">·</div><div class="tile">✧<span class="tilelabel">ORBITAL LANE</span></div><div class="tile locked">·</div><div class="tile">⌁<span class="tilelabel">RELAY</span></div><div class="tile owned">✦<span class="tilelabel">YOU ARE HERE</span></div><div class="tile">✧</div><div class="tile">·</div><div class="tile">☄</div><div class="tile locked">·</div><div class="tile">·</div><div class="tile">◌</div><div class="tile">·</div><div class="tile">·</div></div><div class="cardgrid"><div class="feature-card"><span class="bigicon">◉</span><h3>Orbital listening post</h3><p>Place a satellite in low orbit. The old world's noise may finally resolve into a signal.</p><div class="statrow"><span>COST</span><b>35 salvage · 20 power · 8 intel</b></div><button class="btn primary" data-action="satellite" style="margin-top:12px" ${!unlocked||s.scrap<35||s.power<20||s.intel<8?'disabled':''}>${unlocked?'Launch satellite':'Reach city district 2 first'}</button></div><div class="feature-card"><span class="bigicon">⌖</span><h3>Survey the frontier</h3><p>Send a crew to map the surface. Safer routes mean better supply runs.</p><div class="statrow"><span>REWARD</span><b>+10 intel · +14 salvage</b></div><button class="btn" data-action="survey" style="margin-top:12px" ${s.day<3?'disabled':''}>Start survey</button></div></div>`}
-function fieldView(){return `<div class="viewhead"><div><h2>Out there, together.</h2><p>Supplies don't come easy. Neither do trust and good aim.</p></div><span class="tag" style="color:var(--orange);border-color:#674b38">THREAT ${s.heat<3?'LOW':s.heat<6?'RISING':'HIGH'}</span></div><div class="mission"><div class="missiontop"><h3>Contract · The quiet depot</h3><span class="tag">${s.contracts?'COMPLETE':'AVAILABLE'}</span></div><p>An abandoned transit depot has started transmitting on an old emergency frequency. Go in, find the source, and get back before dark.</p><div class="missionstats"><span>RISK <b>MODERATE</b></span><span>CREW <b>${s.people.length} READY</b></span><span>REWARD <b>+18 SALVAGE · +6 INTEL</b></span></div><div class="mission-actions"><button class="btn primary" data-action="mission" ${s.contracts?'disabled':''}>${s.contracts?'Contract complete':'Deploy a crew'}</button><button class="btn" data-action="scavenge">Quick scavenging run</button></div></div><div class="cardgrid"><div class="feature-card"><span class="bigicon">⚒</span><h3>Field kit</h3><p>Make sure the team has what they need before the next run.</p><div class="statrow"><span>WORKSHOP</span><b>${roomCount('workshop')?'ONLINE':'NOT BUILT'}</b></div></div><div class="feature-card"><span class="bigicon">◈</span><h3>Read the room</h3><p>Combat is one answer. Sometimes a little patience gets you further.</p><div class="statrow"><span>THREAT LEVEL</span><b>${s.heat} / 10</b></div></div></div>`}
-function handle(action,arg){if(action==='build')openBuild();if(action==='endday')endDay();if(action==='talk'){for(let p of s.people)for(const k of ['Social','Morale'])p.needs[k]=Math.min(100,p.needs[k]+12);actionStyle('architect');addlog('A small kindness','The shelter felt a little less quiet tonight.');notify('A good conversation goes a long way.');render()}if(action==='market')market();if(action==='neighbor')neighbor();if(action==='satellite')satellite();if(action==='survey')survey();if(action==='mission')mission();if(action==='scavenge')scavenge()}
-function openBuild(){document.querySelector('#modal').innerHTML=`<div class="eyebrow">MAKE ROOM TO GROW</div><h2>Build a shelter module</h2><p>Choose what your people need next. Every room changes what the settlement can do.</p><div class="buildoptions">${Object.entries(defs).filter(([id])=>id!=='habitat').map(([id,d])=>`<button class="buildopt" data-build="${id}" ${!afford(d.cost)?'disabled':''}><span><b>${d.icon} &nbsp;${d.name}</b><small>${d.desc}</small></span><em>${d.cost.scrap}⬡ &nbsp;${d.cost.power}ϟ</em></button>`).join('')}</div><button class="btn modalclose" data-close>Not now</button>`;openModal();document.querySelectorAll('[data-build]').forEach(b=>b.onclick=()=>build(b.dataset.build));document.querySelector('[data-close]').onclick=closeModal}
-function openModal(){document.querySelector('#modalwrap').classList.add('open')}function closeModal(){document.querySelector('#modalwrap').classList.remove('open')}document.querySelector('#modalwrap').onclick=e=>{if(e.target.id==='modalwrap')closeModal()};
-function build(id){let d=defs[id];if(!spend(d.cost)){notify('Not enough supplies.');return}if(s.rooms.length>4){notify('Shelter is full.');return}s.rooms.push(id);actionStyle('architect',id==='garden'||id==='bunk'?2:1);addlog(`${d.name} built`,`${d.desc}`);closeModal();notify(`${d.name} is ready.`);render()}
-function endDay(){s.day++;let garden=roomCount('garden'),workshop=roomCount('workshop'),relay=roomCount('relay');s.food+=garden*9-5;s.power+=2-relay*1;s.scrap+=workshop?5:2;s.credits+=s.city?3:0;s.intel+=relay?2:0;for(let p of s.people){p.needs.Food=Math.max(0,p.needs.Food-(s.food<0?23:12));p.needs.Energy=Math.max(0,p.needs.Energy-9);p.needs.Social=Math.max(0,p.needs.Social-6);p.needs.Morale=Math.max(0,p.needs.Morale-4+(garden?1:0));}if(s.food<0){s.food=0;s.people.forEach(p=>p.needs.Morale=Math.max(0,p.needs.Morale-10));addlog('Empty cupboards','The shelter is short on food. Find a solution soon.')}else if(s.day%2===0){s.food+=2;addlog('Another sunrise','The settlement made it through another night.')}if(s.day===3&&!s.city)addlog('City lights','A cluster of lights appears on the horizon.');notify('A new day begins. The settlement shifts.');render()}
-function market(){if(!spend({scrap:25,food:12}))return;s.city++;s.credits+=12;actionStyle('tycoon',2);actionStyle('architect');addlog('The old market','A few traders have set up beneath the cracked glass roof.');notify('The market is open. New routes are possible.');render()}
-function neighbor(){if(s.day<2)return;s.people.push({name:'Jun Armitage',role:'Radio operator',icon:'⌁',needs:{Food:76,Energy:70,Social:44,Morale:61},skill:'Signal 3'});s.food-=5;s.city=Math.max(1,s.city);actionStyle('architect',2);addlog('A new arrival','Jun came in from the flats, carrying a hand-cranked radio.');notify('Jun joins your settlement.');render()}
-function survey(){if(!spend({food:5}))return;s.intel+=10;s.scrap+=14;actionStyle('tycoon');addlog('Survey complete','Your crew found a sealed cache beyond the ridge.');notify('Survey complete. +10 intel, +14 salvage.');render()}
-function mission(){if(s.contracts)return;let total=s.people.reduce((a,p)=>a+p.needs.Energy,0)/s.people.length;if(total<35){notify('Your crew needs rest before deploying.');return}s.contracts=1;s.scrap+=18;s.intel+=6;s.heat=Math.min(10,s.heat+2);s.people.forEach(p=>p.needs.Energy=Math.max(15,p.needs.Energy-27));actionStyle('operator',2);actionStyle('renegade');addlog('Depot secured','The crew made it out with a signal cache. Something noticed.');notify('Contract secured. The crew brought back intel.');render()}
-function scavenge(){if(!spend({food:3}))return;s.scrap+=9;s.heat=Math.min(10,s.heat+1);actionStyle('renegade');actionStyle('operator');addlog('A quick run','The crew found salvage on the surface. A drone followed them back.');notify('+9 salvage. Threat is rising.');render()}
-function satellite(){if(s.city<2&&!s.orbit)return;if(!spend({scrap:35,power:20,intel:8}))return;s.orbit=1;actionStyle('tycoon',3);addlog('A light among the stars','The listening post is live. A signal answers from far beyond the moon.');notify('Orbital listening post online.');render()}
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));renderView()});document.querySelector('#resetBtn').onclick=()=>{document.querySelector('#modal').innerHTML='<div class="eyebrow">START AGAIN?</div><h2>Leave this world behind?</h2><p>This will erase your local campaign and begin a new settlement. There is no undo.</p><div class="actions"><button class="btn primary" id="confirmReset">Start a new campaign</button><button class="btn" data-close>Keep going</button></div>';openModal();document.querySelector('#confirmReset').onclick=()=>{s=structuredClone(initial);closeModal();tab='shelter';document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab==='shelter'));render();notify('A new beginning.')};document.querySelector('[data-close]').onclick=closeModal};render();
-</script></body></html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>AFTERLIGHT — Dynamic Genesis</title>
+    <style>
+      :root {
+        --bg: #0d1210;
+        --bg2: #121b17;
+        --panel: rgba(15, 23, 19, 0.9);
+        --panel2: rgba(21, 31, 26, 0.9);
+        --line: rgba(160, 185, 164, 0.18);
+        --text: #edf2ea;
+        --muted: #a3b5a5;
+        --lime: #c8f06d;
+        --lime2: #6acb7f;
+        --orange: #ffb179;
+        --red: #ff7869;
+        --cyan: #8ad0da;
+        --shadow: rgba(0, 0, 0, 0.34);
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: Inter, "Segoe UI", sans-serif; }
+      body { overflow: hidden; }
+      #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; background: radial-gradient(circle at top, #1f2f25 0%, #0e1813 34%, #090d0b 100%); }
+
+      #hud {
+        position: fixed; inset: 0; pointer-events: none; display: flex; flex-direction: column; padding: 18px 18px 14px;
+      }
+
+      .topbar {
+        display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none;
+      }
+
+      .brand {
+        display: flex; align-items: center; gap: 12px; background: rgba(12,17,15,0.52); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; backdrop-filter: blur(10px);
+      }
+
+      .brandmark {
+        width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: linear-gradient(135deg, var(--lime), #d8ff95); color: #10210f; font-weight: 900; box-shadow: 0 0 25px rgba(200, 240, 109, 0.3);
+      }
+
+      .brand-text { line-height: 1.1; }
+      .brand-text strong { display: block; font-size: 12px; letter-spacing: 0.24em; }
+      .brand-text span { display: block; margin-top: 3px; font-size: 9px; letter-spacing: 0.2em; color: var(--muted); }
+
+      .top-actions {
+        display: flex; align-items: center; gap: 10px;
+      }
+
+      .pill, .panel, .mini-btn, .action-btn {
+        pointer-events: auto;
+        border: 1px solid var(--line);
+        background: rgba(11, 18, 15, 0.7);
+        border-radius: 10px;
+        color: var(--text);
+        box-shadow: 0 10px 30px rgba(0,0,0,.15);
+        backdrop-filter: blur(8px);
+      }
+
+      .pill {
+        padding: 9px 12px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+      }
+      .pill b { color: var(--lime); }
+      .mini-btn {
+        width: 36px; height: 36px; display: grid; place-items: center; font-size: 18px; cursor: pointer; transition: transform .12s ease, border-color .12s ease;
+      }
+      .mini-btn:hover, .action-btn:hover { transform: translateY(-1px); border-color: rgba(200, 240, 109, 0.6); }
+
+      .resource-bar {
+        display: grid; grid-template-columns: repeat(5, minmax(100px, 1fr)); gap: 10px; margin-top: 16px;
+      }
+
+      .resource {
+        background: rgba(17, 24, 20, 0.7); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; align-items: flex-end; justify-content: space-between; min-height: 68px;
+      }
+      .res-meta { display: flex; flex-direction: column; }
+      .res-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+      .res-value { font-size: 25px; font-weight: 700; margin-top: 7px; line-height: 1; }
+      .res-icon { font-size: 20px; opacity: 0.8; }
+
+      .content {
+        display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; margin-top: 18px; flex: 1; min-height: 0;
+      }
+
+      .playfield { position: relative; min-height: 0; }
+
+      .panel {
+        background: rgba(13, 20, 17, 0.78); border: 1px solid var(--line); border-radius: 15px; overflow: hidden;
+      }
+
+      .viewport {
+        position: relative; height: 100%; min-height: 445px; border-radius: 15px; overflow: hidden; border: 1px solid var(--line); pointer-events: none;
+        background: rgba(13, 20, 17, 0.06); backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+
+      .overlay-bar {
+        position: absolute; left: 18px; right: 18px; bottom: 18px; display: flex; justify-content: space-between; align-items: center; gap: 14px; pointer-events: none;
+      }
+
+      .toolbar {
+        display: flex; flex-wrap: wrap; gap: 8px; pointer-events: auto; max-width: 72%;
+      }
+      .action-btn {
+        cursor: pointer; background: rgba(17, 25, 20, 0.82); color: var(--text); padding: 9px 12px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 9px; transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      }
+      .action-btn.primary { background: linear-gradient(135deg, rgba(200,240,109,.2), rgba(200,240,109,.08)); color: #eef8d8; border-color: rgba(200,240,109,.4); }
+      .action-btn.warning { border-color: rgba(255,177,121,.4); }
+      .action-btn.full { width: 100%; }
+
+      .status-box {
+        pointer-events: auto; background: rgba(18, 26, 22, 0.8); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 180px;
+      }
+      .status-box strong { display: block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+      .status-box span { display: block; margin-top: 4px; color: var(--text); font-size: 13px; }
+
+      .side {
+        display: flex; flex-direction: column; gap: 16px; min-height: 0; overflow-y: auto; scrollbar-width: thin;
+      }
+      .side > .panel { flex: 0 0 auto; }
+
+      .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 12px; border-bottom: 1px solid var(--line); }
+      .panel-header h3 { margin: 0; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+      .tag {
+        display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid rgba(200,240,109,.35); background: rgba(200,240,109,.08); color: var(--lime); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 7px 9px;
+      }
+      .tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px rgba(200,240,109,.9); }
+
+      .panel-body { padding: 14px 16px 16px; }
+
+      .objective {
+        border: 1px solid rgba(200,240,109,.25); background: linear-gradient(135deg, rgba(200,240,109,.08), rgba(138,208,218,.04)); border-radius: 12px; padding: 14px; margin-top: 12px;
+      }
+      .objective small { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lime); }
+      .objective h4 { margin: 8px 0 8px; font-size: 18px; }
+      .objective p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+      .objective .bar { height: 5px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: 12px; }
+      .objective .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--lime), #a3d15b); border-radius: inherit; }
+
+      .profile-wrap { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+      .profile-avatar { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(200,240,109,.25), rgba(138,208,218,.15)); border: 1px solid var(--line); display: grid; place-items: center; font-size: 18px; }
+      .profile-meta strong { display: block; font-size: 14px; }
+      .profile-meta span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; }
+
+      .traits { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+      .trait { background: rgba(255,255,255,0.02); border: 1px solid var(--line); padding: 6px 8px; border-radius: 7px; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+      .log-list { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+      .log-item { display: flex; gap: 10px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+      .log-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); margin-top: 5px; box-shadow: 0 0 10px rgba(200,240,109,.5); }
+      .log-item strong { color: var(--text); display: block; margin-bottom: 3px; }
+
+      #actionPanel { display: flex; flex-direction: row; gap: 10px; }
+      .stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-top: 12px; }
+      .stat-card { border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,0.02); padding: 10px 12px; }
+      .stat-card span { display: block; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+      .stat-card b { display: block; margin-top: 6px; font-size: 18px; }
+
+      .touch-controls { display: none; position: absolute; left: 18px; bottom: 18px; z-index: 3; }
+      .joystick {
+        width: 88px; height: 88px; border: 1px solid rgba(220,240,220,.3); border-radius: 50%;
+        background: rgba(15,23,19,.62); display: grid; place-items: center; touch-action: none; user-select: none;
+        box-shadow: inset 0 0 22px rgba(0,0,0,.24); pointer-events: auto;
+      }
+      .joystick-knob { width: 36px; height: 36px; border: 1px solid rgba(200,240,109,.72); border-radius: 50%; background: rgba(200,240,109,.24); box-shadow: 0 0 18px rgba(200,240,109,.18); }
+
+      @media (max-width: 960px) {
+        #hud { padding: 10px; }
+        .resource-bar { grid-template-columns: repeat(5, minmax(0,1fr)); gap: 6px; }
+        .resource { padding: 8px; min-height: 54px; }
+        .res-value { font-size: 19px; }
+        .content { grid-template-columns: 1fr; }
+        .side { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-auto-rows: max-content; align-content: start; overflow: auto; }
+        .side > .panel { min-height: 0; }
+        .touch-controls { display: flex; pointer-events: none; }
+        .overlay-bar { left: 120px; }
+        #actionPanel { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+        .toolbar { max-width: 100%; }
+      }
+
+      @media (max-width: 640px) {
+        #hud { padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom)); overflow-y: auto; }
+        .content { height: min(72dvh, 620px); min-height: 300px; }
+        .viewport { height: 100%; min-height: 0; }
+        .brand { padding: 7px 9px; gap: 8px; }
+        .brandmark { width: 26px; height: 26px; }
+        .brand-text strong { letter-spacing: 0.12em; font-size: 10px; }
+        .brand-text span { font-size: 7px; }
+        .top-actions { gap: 5px; }
+        .pill { padding: 8px; font-size: 9px; letter-spacing: .08em; }
+        .mini-btn { width: 34px; height: 34px; }
+        .resource-bar { margin-top: 8px; }
+        .resource { min-height: 48px; padding: 6px; border-radius: 8px; }
+        .res-label { font-size: 7px; letter-spacing: .1em; }
+        .res-value { font-size: 17px; margin-top: 5px; }
+        .res-icon { display: none; }
+        .content { display: block; flex: none; margin-top: 8px; }
+        .side { display: none; }
+        .overlay-bar { left: 10px; right: 10px; bottom: 10px; align-items: flex-end; gap: 8px; }
+        .toolbar { flex: 1 1 auto; min-width: 0; margin-left: 84px; flex-wrap: nowrap; overflow-x: auto; max-width: calc(100% - 84px); padding: 3px 2px 6px; scrollbar-width: none; }
+        #actionPanel { flex-direction: row; flex-wrap: nowrap; gap: 8px; }
+        .toolbar::-webkit-scrollbar { display: none; }
+        .action-btn { white-space: nowrap; padding: 9px 10px; font-size: 9px; }
+        .status-box { display: none; }
+        .touch-controls { position: absolute; left: 12px; bottom: 12px; z-index: 3; }
+        .joystick { width: 78px; height: 78px; }
+        .joystick-knob { width: 32px; height: 32px; }
+      }
+
+      @media (orientation: landscape) and (max-height: 520px) {
+        #hud { padding: 6px; }
+        .resource-bar { margin-top: 5px; }
+        .resource { min-height: 40px; padding: 4px 7px; }
+        .res-value { font-size: 15px; margin-top: 3px; }
+        .content { margin-top: 5px; }
+        .viewport { min-height: 230px; }
+        .side { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+
+    <div id="hud">
+      <div class="topbar">
+        <div class="brand">
+          <div class="brandmark">✦</div>
+          <div class="brand-text">
+            <strong>AFTERLIGHT</strong>
+            <span>PROJECT DYNAMIC GENESIS</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <div class="pill">Day <b id="dayValue">01</b> · <span id="weatherValue">Clear</span></div>
+          <button class="mini-btn" id="resetBtn" title="New campaign">↺</button>
+        </div>
+      </div>
+
+      <div class="resource-bar" id="resourceBar"></div>
+
+      <div class="content">
+        <div class="playfield panel viewport">
+          <div class="overlay-bar">
+            <div class="toolbar" id="actionPanel"></div>
+            <div class="status-box">
+              <strong>Current Phase</strong>
+              <span id="phaseText">SURVIVAL</span>
+            </div>
+          </div>
+          <div class="touch-controls" aria-label="Movement controls">
+            <div class="joystick" id="joystick" role="application" aria-label="Move character">
+              <div class="joystick-knob" id="joystickKnob"></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="side">
+          <section class="panel">
+            <div class="panel-header">
+              <h3>Campaign</h3>
+              <div class="tag" id="phaseTag">CHAPTER 01</div>
+            </div>
+            <div class="panel-body">
+              <div class="objective" id="objectivePanel"></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h3>Playstyle</h3>
+            </div>
+            <div class="panel-body">
+              <div class="profile-wrap" id="profilePanel"></div>
+              <div class="traits" id="traitList"></div>
+              <div class="stat-grid" id="statGrid"></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h3>World Signals</h3>
+            </div>
+            <div class="panel-body">
+              <div class="log-list" id="logList"></div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </div>
+
+    <script type="module">
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
+
+      const canvas = document.getElementById('game');
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0b120f);
+      scene.fog = new THREE.Fog(0x0b120f, 18, 70);
+
+      const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 200);
+      camera.position.set(0, 12, 16);
+
+      const clock = new THREE.Clock();
+      const keys = {};
+      const worldSize = 40;
+      const halfSize = worldSize / 2;
+
+      const state = {
+        day: 1,
+        weather: 'Clear',
+        resources: { food: 40, power: 36, scrap: 28, credits: 18, intel: 5 },
+        style: { architect: 1, tycoon: 0, renegade: 0, operator: 0 },
+        heat: 1,
+        city: 0,
+        orbit: 0,
+        habitat: 0,
+        logs: [
+          { title: 'A quiet sunrise', text: 'The shelter hums and holds.' },
+          { title: 'Signal drift', text: 'A distant relay flickers at the edge of the valley.' },
+          { title: 'Outside', text: 'Unclaimed ground waits in all directions.' }
+        ],
+        people: [
+          { name: 'Mara', role: 'Caretaker', color: '#d7f092', x: -1.5, z: 0.5, needs: { hunger: 72, energy: 70, morale: 68 } },
+          { name: 'Ivo', role: 'Scavenger', color: '#8ad0da', x: 1.5, z: -1.5, needs: { hunger: 68, energy: 60, morale: 72 } },
+          { name: 'Sera', role: 'Tinkerer', color: '#ffb179', x: 0.5, z: 1.8, needs: { hunger: 80, energy: 74, morale: 76 } }
+        ],
+        structures: [],
+        resourceNodes: [],
+        enemies: [],
+        mode: 'survival',
+        buildingIdx: 0,
+        selectedAction: null,
+        totalGathered: 0,
+        openMarket: false,
+        unlockedSatellite: false,
+      };
+
+      const resourceDefs = {
+        food: { icon: '◌', label: 'Rations' },
+        power: { icon: 'ϟ', label: 'Power' },
+        scrap: { icon: '⬡', label: 'Scrap' },
+        credits: { icon: '¤', label: 'Credits' },
+        intel: { icon: '⌁', label: 'Intel' }
+      };
+
+      const buildingDefs = {
+        habitat: { color: 0x7aa36d, size: [3.4, 2.2, 3.2], cost: { scrap: 10, power: 4 }, label: 'Habitat' },
+        garden: { color: 0x9ad16d, size: [3, 1.8, 3], cost: { scrap: 15, power: 6, food: 3 }, label: 'Garden' },
+        workshop: { color: 0xe7a860, size: [3.8, 2.8, 3.4], cost: { scrap: 18, power: 8 }, label: 'Workshop' },
+        relay: { color: 0x8ad0da, size: [3.4, 2.6, 3.4], cost: { scrap: 20, power: 10, intel: 4 }, label: 'Relay' },
+        market: { color: 0xc7b0ff, size: [4, 3, 4], cost: { credits: 14, scrap: 12 }, label: 'Market' }
+      };
+
+      let player = {
+        group: new THREE.Group(),
+        velocity: new THREE.Vector3(),
+        speed: 6.5,
+        radius: 0.8,
+        position: new THREE.Vector3(0, 0.75, 0),
+        yaw: 0,
+      };
+
+      let cameraTarget = new THREE.Vector3();
+      let cameraOrbit = { yaw: 0.8, pitch: 0.9, distance: 12.5 };
+      let pointerDown = false;
+      let lastMouse = { x: 0, y: 0 };
+      const touchMove = { x: 0, y: 0 };
+      let joystickPointer = null;
+
+      const resourceTypeOrder = ['food', 'scrap', 'power', 'intel', 'credits'];
+
+      function initScene() {
+        const hemi = new THREE.HemisphereLight(0xa8d8af, 0x101512, 1.8);
+        scene.add(hemi);
+
+        const sun = new THREE.DirectionalLight(0xf8f2d9, 1.6);
+        sun.position.set(12, 18, 8);
+        sun.castShadow = true;
+        sun.shadow.mapSize.width = 1024;
+        sun.shadow.mapSize.height = 1024;
+        sun.shadow.camera.left = -28;
+        sun.shadow.camera.right = 28;
+        sun.shadow.camera.top = 28;
+        sun.shadow.camera.bottom = -28;
+        scene.add(sun);
+
+        const ground = new THREE.Mesh(
+          new THREE.PlaneGeometry(worldSize, worldSize),
+          new THREE.MeshStandardMaterial({ color: 0x1e3328, roughness: 0.96, metalness: 0.04 })
+        );
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        const road = new THREE.Mesh(
+          new THREE.BoxGeometry(38, 0.08, 3.4),
+          new THREE.MeshStandardMaterial({ color: 0x252f2b, roughness: 0.9 })
+        );
+        road.position.set(0, 0.04, 0);
+        road.receiveShadow = true;
+        scene.add(road);
+
+        const grid = new THREE.GridHelper(worldSize, 20, 0x4a6552, 0x24382c);
+        grid.position.y = 0.05;
+        scene.add(grid);
+
+        const basePad = new THREE.Mesh(
+          new THREE.CylinderGeometry(4.8, 5.2, 0.8, 20),
+          new THREE.MeshStandardMaterial({ color: 0x3b4d42, metalness: 0.2, roughness: 0.8 })
+        );
+        basePad.position.y = 0.4;
+        basePad.receiveShadow = true;
+        scene.add(basePad);
+
+        player.group.position.set(0, 0.75, 0);
+        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xdfe8dd, roughness: 0.7 });
+        const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.52, 1.2, 4, 8), bodyMat);
+        body.castShadow = true;
+        body.position.y = 0.7;
+        player.group.add(body);
+
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.38, 18, 18), new THREE.MeshStandardMaterial({ color: 0xe5cda8, roughness: 0.8 }));
+        head.position.y = 1.72;
+        head.castShadow = true;
+        player.group.add(head);
+
+        const visor = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.18, 0.18), new THREE.MeshStandardMaterial({ color: 0x1a221d, emissive: 0x1d2d27, emissiveIntensity: 0.4 }));
+        visor.position.set(0, 1.72, 0.3);
+        player.group.add(visor);
+
+        scene.add(player.group);
+
+        createResourceNodes();
+        createEnemies();
+        buildStructure('habitat', -4, 0, true);
+        buildStructure('garden', 2.5, -2.5, true);
+      }
+
+      function createResourceNodes() {
+        const terrains = [
+          { type: 'scrap', x: -16, z: 13 },
+          { type: 'food', x: 18, z: -14 },
+          { type: 'power', x: 15, z: 11 },
+          { type: 'intel', x: -13, z: -17 },
+          { type: 'credits', x: 22, z: 3 },
+          { type: 'scrap', x: -8, z: 20 },
+          { type: 'food', x: 9, z: -20 }
+        ];
+
+        terrains.forEach((item, idx) => {
+          const geometry = item.type === 'power' ? new THREE.OctahedronGeometry(0.7, 0) : new THREE.CylinderGeometry(0.7, 0.9, 1.5, 8);
+          const colorMap = { scrap: 0xb9c9d6, food: 0x9bd666, power: 0x8ad0da, intel: 0xc5b2ff, credits: 0xf0c96d };
+          const material = new THREE.MeshStandardMaterial({ color: colorMap[item.type], emissive: colorMap[item.type], emissiveIntensity: 0.2, roughness: 0.7, metalness: 0.2 });
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.position.set(item.x, 0.9, item.z);
+          mesh.castShadow = true;
+          mesh.userData = { type: item.type, id: `node-${idx}`, active: true };
+          scene.add(mesh);
+          state.resourceNodes.push(mesh);
+        });
+      }
+
+      function createEnemies() {
+        const enemyTypes = [0x7a5a53, 0x8f1e25, 0x4c6b68];
+        for (let i = 0; i < 4; i++) {
+          const g = new THREE.Group();
+          const body = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 1.4), new THREE.MeshStandardMaterial({ color: enemyTypes[i % enemyTypes.length], metalness: 0.6, roughness: 0.3 }));
+          body.castShadow = true;
+          body.position.y = 0.8;
+          g.add(body);
+          const wire = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.15, 0.8), new THREE.MeshStandardMaterial({ color: 0xdfe3df, emissive: 0x6a1918, emissiveIntensity: 0.8 }));
+          wire.position.set(0, 0.95, 0.6);
+          g.add(wire);
+          const x = -10 + Math.random() * 20;
+          const z = -10 + Math.random() * 20;
+          g.position.set(x, 0, z);
+          g.userData = { speed: 1.8 + Math.random() * 1.4, drift: i };
+          scene.add(g);
+          state.enemies.push(g);
+        }
+      }
+
+      function buildStructure(type, x = 0, z = 0, silent = false) {
+        const def = buildingDefs[type];
+        if (!def) return;
+
+        const placement = { x: clampNumber(x, -18, 18), z: clampNumber(z, -18, 18) };
+        const canAfford = Object.entries(def.cost).every(([key, value]) => state.resources[key] >= value);
+        if (!silent && !canAfford) {
+          notify('Not enough resources for that build.');
+          return;
+        }
+
+        if (!silent) {
+          for (const [key, value] of Object.entries(def.cost)) {
+            state.resources[key] -= value;
+          }
+        }
+
+        const group = new THREE.Group();
+        const mat = new THREE.MeshStandardMaterial({ color: def.color, roughness: 0.8, metalness: 0.1, emissive: def.color, emissiveIntensity: 0.08 });
+        const building = new THREE.Mesh(new THREE.BoxGeometry(...def.size), mat);
+        building.castShadow = true;
+        building.receiveShadow = true;
+        building.position.y = def.size[1] / 2;
+        group.add(building);
+
+        group.position.set(placement.x, 0, placement.z);
+        scene.add(group);
+
+        state.structures.push({ type, x: placement.x, z: placement.z, mesh: group });
+
+        if (type === 'habitat') state.habitat++;
+        if (type === 'garden') state.style.architect += 2;
+        if (type === 'workshop') state.style.tycoon += 1;
+        if (type === 'relay') state.style.operator += 2;
+        if (type === 'market') {
+          state.city += 1;
+          state.style.tycoon += 2;
+          state.style.renegade += 1;
+        }
+
+        if (!silent) {
+          addLog(def.label + ' constructed', 'Your settlement is becoming more stable.');
+          notify(`${def.label} is up and running.`);
+          renderUI();
+        }
+      }
+
+      function gatherNearestNode() {
+        let nearest = null;
+        for (const node of state.resourceNodes) {
+          if (!node.userData.active) continue;
+          const dist = player.group.position.distanceTo(node.position);
+          if (dist < 3.2 && (!nearest || dist < nearest.dist)) {
+            nearest = { node, dist };
+          }
+        }
+
+        if (!nearest) {
+          notify('No resource node close enough.');
+          return;
+        }
+
+        const type = nearest.node.userData.type;
+        const gains = { scrap: 7, food: 8, power: 7, intel: 4, credits: 5 };
+        state.resources[type] = (state.resources[type] || 0) + gains[type];
+        state.totalGathered += gains[type];
+        state.style.tycoon += 1;
+        if (type === 'intel') state.style.operator += 1;
+        nearest.node.userData.active = false;
+        nearest.node.visible = false;
+        setTimeout(() => {
+          nearest.node.visible = true;
+          nearest.node.userData.active = true;
+        }, 6000);
+        addLog('Resource secured', `${type.toUpperCase()} recovered from the field.`);
+        notify(`Recovered ${gains[type]} ${type}.`);
+        renderUI();
+      }
+
+      function advanceDay() {
+        state.day += 1;
+        state.weather = ['Clear', 'Dust', 'Storm', 'Warm'][state.day % 4];
+        state.resources.food = Math.max(0, state.resources.food - 4 + (countStructures('garden') * 3));
+        state.resources.power = Math.max(0, state.resources.power - 3 + (countStructures('relay') * 2));
+        state.resources.scrap = Math.max(0, state.resources.scrap + 4 + Math.min(12, countStructures('workshop') * 3));
+        state.resources.credits = Math.max(0, state.resources.credits + state.city * 3);
+        state.resources.intel = Math.max(0, state.resources.intel + countStructures('relay') * 2);
+
+        if (state.resources.food <= 8) {
+          state.heat = Math.min(10, state.heat + 1);
+          addLog('Supply pressure', 'Your settlement is running thin on food.');
+        }
+
+        if (state.city >= 1) {
+          state.style.tycoon += 2;
+          addLog('The city opens', 'Trade routes appear beyond the distant lights.');
+        }
+
+        if (state.day >= 4 && !state.openMarket) {
+          state.openMarket = true;
+          addLog('Market route', 'A stable caravan route is now available.');
+          buildStructure('market', 9, -6, true);
+        }
+
+        if (state.day >= 7 && !state.unlockedSatellite) {
+          state.unlockedSatellite = true;
+          addLog('Orbital window', 'The sky is finally clear enough for a launch attempt.');
+        }
+
+        if (state.day >= 4 && state.city >= 1) state.mode = 'enterprise';
+        if (state.day >= 7) state.mode = 'orbital';
+        renderUI();
+      }
+
+      function countStructures(type) {
+        return state.structures.filter(item => item.type === type).length;
+      }
+
+      function buildPlayerActionBar() {
+        const btns = [
+          { label: 'Gather', action: 'gather' },
+          { label: 'End Day', action: 'nextday', primary: true },
+          { label: 'Build Habitat', action: 'build:habitat' },
+          { label: 'Build Garden', action: 'build:garden' },
+          { label: 'Build Workshop', action: 'build:workshop' },
+          { label: 'Build Relay', action: 'build:relay' },
+          { label: 'Launch Orbital', action: 'launch' },
+          { label: 'Raid Convoy', action: 'raid' }
+        ];
+
+        const panel = document.getElementById('actionPanel');
+        panel.innerHTML = '';
+
+        btns.forEach((btn) => {
+          const el = document.createElement('button');
+          el.className = `action-btn${btn.primary ? ' primary' : ''} ${btn.action === 'raid' ? 'warning' : ''}`;
+          el.textContent = btn.label;
+          el.addEventListener('click', () => handleAction(btn.action));
+          panel.appendChild(el);
+        });
+      }
+
+      function renderUI() {
+        const resourceBar = document.getElementById('resourceBar');
+        resourceBar.innerHTML = '';
+        for (const key of resourceTypeOrder) {
+          const item = document.createElement('div');
+          item.className = 'resource';
+          item.innerHTML = `
+            <div class="res-meta">
+              <span class="res-label">${resourceDefs[key].label}</span>
+              <span class="res-value">${Math.floor(state.resources[key] || 0)}</span>
+            </div>
+            <span class="res-icon">${resourceDefs[key].icon}</span>
+          `;
+          resourceBar.appendChild(item);
+        }
+
+        document.getElementById('dayValue').textContent = String(state.day).padStart(2, '0');
+        document.getElementById('weatherValue').textContent = state.weather;
+        document.getElementById('phaseText').textContent = state.mode.toUpperCase();
+        document.getElementById('phaseTag').textContent = state.day >= 7 ? 'CHAPTER 03' : state.city >= 1 ? 'CHAPTER 02' : 'CHAPTER 01';
+
+        const objective = document.getElementById('objectivePanel');
+        const progress = Math.min(100, Math.round((state.day / 9) * 100));
+        const objectiveText = state.day < 4 ? 'Keep the shelter alive and secure the valley.' : state.city < 2 ? 'Expand into the city and secure trade routes.' : 'Launch beyond the atmosphere and claim a new horizon.';
+        objective.innerHTML = `
+          <small>Primary Directive</small>
+          <h4>${state.day < 4 ? 'Survival' : state.city < 2 ? 'Expansion' : 'Orbital Reach'}</h4>
+          <p>${objectiveText}</p>
+          <div class="bar"><i style="width:${progress}%"></i></div>
+        `;
+
+        const profile = getProfile();
+        document.getElementById('profilePanel').innerHTML = `
+          <div class="profile-avatar">${profile.icon}</div>
+          <div class="profile-meta">
+            <strong>${profile.name}</strong>
+            <span>${profile.summary}</span>
+          </div>
+        `;
+
+        const traitList = document.getElementById('traitList');
+        traitList.innerHTML = Object.entries(state.style)
+          .sort((a, b) => b[1] - a[1])
+          .map(([key, value]) => `<span class="trait">${labelForStyle(key)} ${value}</span>`)
+          .join('');
+
+        const statGrid = document.getElementById('statGrid');
+        statGrid.innerHTML = `
+          <div class="stat-card"><span>Heat</span><b>${state.heat}/10</b></div>
+          <div class="stat-card"><span>City</span><b>${state.city}</b></div>
+          <div class="stat-card"><span>Habitats</span><b>${countStructures('habitat')}</b></div>
+          <div class="stat-card"><span>People</span><b>${state.people.length}</b></div>
+        `;
+
+        const logs = document.getElementById('logList');
+        logs.innerHTML = state.logs.map((entry) => `
+          <div class="log-item">
+            <div class="log-dot"></div>
+            <div>
+              <strong>${entry.title}</strong>
+              <div>${entry.text}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function labelForStyle(key) {
+        return { architect: 'Build', tycoon: 'Trade', renegade: 'Heat', operator: 'Ops' }[key] || key;
+      }
+
+      function getProfile() {
+        const entries = Object.entries(state.style);
+        const winner = entries.reduce((best, item) => item[1] > best[1] ? item : best, ['architect', 0]);
+        if (winner[1] <= 0) return { name: 'The Pioneer', icon: '✦', summary: 'A fragile beginning.' };
+
+        const map = {
+          architect: { name: 'The Architect', icon: '⌂', summary: 'Shelter growth and social stability.' },
+          tycoon: { name: 'The Governor', icon: '◈', summary: 'Industry, logistics, and expansion.' },
+          renegade: { name: 'The Renegade', icon: '⚑', summary: 'Risk, heat, and black-market routes.' },
+          operator: { name: 'The Operator', icon: '⌖', summary: 'Fieldcraft, combat, and security.' },
+        };
+        return map[winner[0]];
+      }
+
+      function addLog(title, text) {
+        state.logs.unshift({ title, text });
+        state.logs = state.logs.slice(0, 5);
+      }
+
+      function notify(message) {
+        const old = document.getElementById('toast');
+        if (old) old.remove();
+        const toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.textContent = message;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = 'rgba(17, 23, 18, 0.94)';
+        toast.style.border = '1px solid rgba(200,240,109,.35)';
+        toast.style.padding = '10px 14px';
+        toast.style.borderRadius = '10px';
+        toast.style.fontSize = '11px';
+        toast.style.letterSpacing = '0.12em';
+        toast.style.textTransform = 'uppercase';
+        toast.style.zIndex = '1000';
+        document.body.appendChild(toast);
+        clearTimeout(notify.timeout);
+        notify.timeout = setTimeout(() => toast.remove(), 1800);
+      }
+
+      function handleAction(action) {
+        if (action === 'gather') {
+          gatherNearestNode();
+        } else if (action === 'nextday') {
+          advanceDay();
+        } else if (action === 'launch') {
+          if (!state.unlockedSatellite) { notify('Orbital window not yet available.'); return; }
+          if (state.resources.scrap < 28 || state.resources.power < 18 || state.resources.intel < 10) { notify('Need more scrap, power and intel.'); return; }
+          state.resources.scrap -= 28;
+          state.resources.power -= 18;
+          state.resources.intel -= 10;
+          state.orbit = 1;
+          state.style.tycoon += 4;
+          addLog('Orbital launch', 'The first true launch leaves the atmosphere and changes everything.');
+          notify('Launch successful.');
+          renderUI();
+        } else if (action === 'raid') {
+          if (state.resources.food < 8) { notify('You need food for the team.'); return; }
+          state.resources.food -= 8;
+          state.resources.scrap += 12;
+          state.resources.credits += 9;
+          state.heat = Math.min(10, state.heat + 2);
+          state.style.renegade += 2;
+          state.style.operator += 1;
+          addLog('Convoy hit', 'The route pays off, but the world notices.');
+          notify('Raid complete.');
+          renderUI();
+        } else if (action.startsWith('build:')) {
+          const type = action.split(':')[1];
+          const def = buildingDefs[type];
+          if (!def) return;
+          if (!canAfford(def.cost)) { notify('You cannot afford this structure.'); return; }
+          const targetX = Math.round(player.group.position.x / 2.5) * 2.5;
+          const targetZ = Math.round(player.group.position.z / 2.5) * 2.5;
+          buildStructure(type, targetX, targetZ, false);
+        }
+      }
+
+      function canAfford(cost) {
+        return Object.entries(cost).every(([key, value]) => (state.resources[key] || 0) >= value);
+      }
+
+      function animate() {
+        const dt = clock.getDelta();
+        const moveX = (keys['d'] || keys['arrowright'] ? 1 : 0) - (keys['a'] || keys['arrowleft'] ? 1 : 0) + touchMove.x;
+        const moveZ = (keys['w'] || keys['arrowup'] ? 1 : 0) - (keys['s'] || keys['arrowdown'] ? 1 : 0) - touchMove.y;
+
+        if (moveX || moveZ) {
+          const inputMagnitude = Math.min(1, Math.hypot(moveX, moveZ));
+          const dir = new THREE.Vector3(moveX, 0, moveZ).normalize();
+          const speed = (keys['shift'] ? 1.5 : 1) * player.speed * inputMagnitude;
+          player.group.position.x += dir.x * speed * dt;
+          player.group.position.z += dir.z * speed * dt;
+          player.group.position.x = clampNumber(player.group.position.x, -18, 18);
+          player.group.position.z = clampNumber(player.group.position.z, -18, 18);
+        }
+
+        player.group.rotation.y = Math.atan2(cameraOrbit.yaw, 1) + Math.PI * 0.15;
+
+        state.enemies.forEach((enemy, idx) => {
+          enemy.position.x += Math.sin(clock.elapsedTime * (0.8 + idx * 0.15) + enemy.userData.drift) * 0.02;
+          enemy.position.z += Math.cos(clock.elapsedTime * (0.7 + idx * 0.18) + enemy.userData.drift) * 0.02;
+          enemy.position.x = clampNumber(enemy.position.x, -18, 18);
+          enemy.position.z = clampNumber(enemy.position.z, -18, 18);
+        });
+
+        cameraTarget.copy(player.group.position).add(new THREE.Vector3(0, 1.8, 0));
+        const cosYaw = Math.cos(cameraOrbit.yaw);
+        const sinYaw = Math.sin(cameraOrbit.yaw);
+        const cameraOffset = new THREE.Vector3(cosYaw * cameraOrbit.distance, 7.5 + Math.sin(cameraOrbit.pitch) * 2.8, sinYaw * cameraOrbit.distance);
+        const desired = cameraTarget.clone().add(cameraOffset);
+        camera.position.lerp(desired, 0.08);
+        camera.lookAt(cameraTarget);
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+
+      function clampNumber(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function onKeyDown(event) {
+        const key = event.key.toLowerCase();
+        if (key === 'e') gatherNearestNode();
+        if (key === ' ') {
+          event.preventDefault();
+          handleAction('nextday');
+        }
+        keys[key] = true;
+      }
+
+      function onKeyUp(event) {
+        const key = event.key.toLowerCase();
+        keys[key] = false;
+      }
+
+      window.addEventListener('keydown', onKeyDown);
+      window.addEventListener('keyup', onKeyUp);
+
+      const joystick = document.getElementById('joystick');
+      const joystickKnob = document.getElementById('joystickKnob');
+      function updateJoystick(event) {
+        const rect = joystick.getBoundingClientRect();
+        const maxRadius = rect.width * 0.32;
+        const dx = event.clientX - (rect.left + rect.width / 2);
+        const dy = event.clientY - (rect.top + rect.height / 2);
+        const length = Math.hypot(dx, dy);
+        const scale = length > maxRadius ? maxRadius / length : 1;
+        const x = dx * scale;
+        const y = dy * scale;
+        touchMove.x = x / maxRadius;
+        touchMove.y = y / maxRadius;
+        joystickKnob.style.transform = `translate(${x}px, ${y}px)`;
+      }
+      joystick.addEventListener('pointerdown', (event) => {
+        event.preventDefault();
+        joystickPointer = event.pointerId;
+        joystick.setPointerCapture(event.pointerId);
+        updateJoystick(event);
+      });
+      joystick.addEventListener('pointermove', (event) => {
+        if (event.pointerId === joystickPointer) updateJoystick(event);
+      });
+      const releaseJoystick = (event) => {
+        if (event.pointerId !== joystickPointer) return;
+        joystickPointer = null;
+        touchMove.x = 0;
+        touchMove.y = 0;
+        joystickKnob.style.transform = '';
+      };
+      joystick.addEventListener('pointerup', releaseJoystick);
+      joystick.addEventListener('pointercancel', releaseJoystick);
+
+      canvas.style.touchAction = 'none';
+      canvas.addEventListener('pointerdown', (event) => {
+        pointerDown = true;
+        lastMouse.x = event.clientX;
+        lastMouse.y = event.clientY;
+        canvas.setPointerCapture?.(event.pointerId);
+      });
+
+      canvas.addEventListener('pointermove', (event) => {
+        if (!pointerDown) return;
+        const dx = event.clientX - lastMouse.x;
+        const dy = event.clientY - lastMouse.y;
+        lastMouse.x = event.clientX;
+        lastMouse.y = event.clientY;
+        cameraOrbit.yaw += dx * 0.005;
+        cameraOrbit.pitch = clampNumber(cameraOrbit.pitch - dy * 0.004, 0.25, 1.3);
+      });
+
+      window.addEventListener('pointerup', () => pointerDown = false);
+      window.addEventListener('pointerleave', () => pointerDown = false);
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        state.day = 1;
+        state.weather = 'Clear';
+        state.resources = { food: 40, power: 36, scrap: 28, credits: 18, intel: 5 };
+        state.style = { architect: 1, tycoon: 0, renegade: 0, operator: 0 };
+        state.heat = 1;
+        state.city = 0;
+        state.orbit = 0;
+        state.totalGathered = 0;
+        state.openMarket = false;
+        state.unlockedSatellite = false;
+        state.mode = 'survival';
+        state.logs = [
+          { title: 'Again', text: 'A fresh camp begins underneath the cold grey sun.' },
+          { title: 'New start', text: 'The shelter still needs to be made livable.' }
+        ];
+        state.people = [
+          { name: 'Mara', role: 'Caretaker', color: '#d7f092', x: -1.5, z: 0.5, needs: { hunger: 72, energy: 70, morale: 68 } },
+          { name: 'Ivo', role: 'Scavenger', color: '#8ad0da', x: 1.5, z: -1.5, needs: { hunger: 68, energy: 60, morale: 72 } },
+          { name: 'Sera', role: 'Tinkerer', color: '#ffb179', x: 0.5, z: 1.8, needs: { hunger: 80, energy: 74, morale: 76 } }
+        ];
+
+        state.structures.forEach(item => item.mesh && item.mesh.removeFromParent());
+        state.structures = [];
+        state.habitat = 0;
+        state.resourceNodes.forEach((node) => {
+          node.visible = true;
+          node.userData.active = true;
+        });
+
+        buildStructure('habitat', -4, 0, true);
+        buildStructure('garden', 2.5, -2.5, true);
+        player.group.position.set(0, 0.75, 0);
+        notify('New settlement begun.');
+        renderUI();
+      });
+
+      initScene();
+      buildPlayerActionBar();
+      renderUI();
+      animate();
+    </script>
+  </body>
+</html>
