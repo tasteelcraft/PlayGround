@@ -295,11 +295,17 @@
       import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
 
       const canvas = document.getElementById('game');
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const compactDevice = window.matchMedia('(max-width: 900px)').matches || window.devicePixelRatio > 1.5;
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: false,
+        powerPreference: 'high-performance',
+        stencil: false,
+        depth: true
+      });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, compactDevice ? 1 : 1.25));
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.shadowMap.enabled = false;
 
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0x0b120f);
@@ -374,6 +380,9 @@
       const desiredCameraTarget = new THREE.Vector3();
       const desiredCameraPosition = new THREE.Vector3();
       const movementDirection = new THREE.Vector3();
+      const targetVelocity = new THREE.Vector3();
+      let gaitPhase = 0;
+      let gaitBlend = 0;
       const cameraOrbit = { yaw: 0.8, pitch: 0.72, distance: 13.5 };
       let pointerDown = false;
       let lastMouse = { x: 0, y: 0 };
@@ -815,7 +824,7 @@
 
       function animate() {
         requestAnimationFrame(animate);
-        const dt = Math.min(clock.getDelta(), 0.05);
+        const dt = Math.min(clock.getDelta(), 0.1);
         const moveX = (keys['d'] || keys['arrowright'] ? 1 : 0) - (keys['a'] || keys['arrowleft'] ? 1 : 0) + touchMove.x;
         const moveZ = (keys['w'] || keys['arrowup'] ? 1 : 0) - (keys['s'] || keys['arrowdown'] ? 1 : 0) - touchMove.y;
         const inputLength = Math.hypot(moveX, moveZ);
@@ -824,8 +833,8 @@
         if (inputLength > 0.001) {
           movementDirection.set(moveX / inputLength, 0, moveZ / inputLength);
           const speed = player.speed * (keys['shift'] ? 1.5 : 1) * inputMagnitude;
-          player.velocity.x = movementDirection.x * speed;
-          player.velocity.z = movementDirection.z * speed;
+          targetVelocity.set(movementDirection.x * speed, 0, movementDirection.z * speed);
+          player.velocity.lerp(targetVelocity, 1 - Math.exp(-14 * dt));
           player.group.position.x += player.velocity.x * dt;
           player.group.position.z += player.velocity.z * dt;
           player.group.position.x = clampNumber(player.group.position.x, -18, 18);
@@ -835,20 +844,21 @@
           yawDelta = Math.atan2(Math.sin(yawDelta), Math.cos(yawDelta));
           player.group.rotation.y += yawDelta * (1 - Math.exp(-12 * dt));
         } else {
-          player.velocity.set(0, 0, 0);
+          targetVelocity.set(0, 0, 0);
+          player.velocity.lerp(targetVelocity, 1 - Math.exp(-10 * dt));
         }
 
-        const moving = inputLength > 0.001;
-        const gaitSpeed = keys['shift'] ? 13 : 9;
-        const gaitPhase = clock.elapsedTime * gaitSpeed;
-        const stride = moving ? inputMagnitude : 0;
-        const legSwing = Math.sin(gaitPhase) * 0.48 * stride;
+        const moving = player.velocity.lengthSq() > 0.08;
+        gaitBlend = THREE.MathUtils.damp(gaitBlend, moving ? inputMagnitude : 0, 10, dt);
+        if (moving) gaitPhase += dt * (keys['shift'] ? 12 : 8) * (0.35 + inputMagnitude * 0.65);
+        const stride = gaitBlend;
+        const legSwing = Math.sin(gaitPhase) * 0.42 * stride;
         player.limbs.leftLeg.rotation.x = legSwing;
         player.limbs.rightLeg.rotation.x = -legSwing;
         player.limbs.leftArm.rotation.x = -legSwing * 0.72;
         player.limbs.rightArm.rotation.x = legSwing * 0.72;
-        player.visual.position.y = moving ? Math.abs(Math.sin(gaitPhase)) * 0.035 * stride : THREE.MathUtils.damp(player.visual.position.y, 0, 12, dt);
-        player.visual.rotation.x = THREE.MathUtils.damp(player.visual.rotation.x, moving ? -0.035 * stride : 0, 8, dt);
+        player.visual.position.y = Math.abs(Math.sin(gaitPhase)) * 0.03 * stride;
+        player.visual.rotation.x = -0.03 * stride;
 
         const time = clock.elapsedTime;
         state.enemies.forEach((enemy, idx) => {
